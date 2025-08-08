@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="max-w-2xl mx-auto py-10">
+    <h1 class="text-4xl font-bold text-center text-blue-700 mb-8">Mini Blog</h1>
+    <div class="space-y-8">
+      {% for post in posts %}
+        <div class="bg-white shadow rounded-lg p-6">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ post.title }}</h2>
+          <p class="text-gray-600">{{ post.content }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="mt-10 text-center">
+      <a href="{{ url_for('admin.admin_page') }}" class="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Área Admin</a>
+    </div>
+  </div>
+</body>
+</html>
