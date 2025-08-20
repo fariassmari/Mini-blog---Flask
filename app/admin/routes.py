@@ -1,11 +1,18 @@
-from flask import Blueprint, request, redirect, url_for, render_template, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from app.funcoes import save_posts, append_post
 from . import admin
 
-@admin.route('/', methods=['GET', 'POST'])
+@admin.route("/admin")
 def admin_page():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        current_app.posts.append({'title': title, 'content': content})
-        return redirect(url_for('main.index'))
-    return render_template('admin.html')
+    return render_template("admin.html")
+
+@admin.route("/create", methods=["POST"])
+def create_post():
+    title = request.form["title"]
+    content = request.form["content"]
+    post = {"title": title, "content": content}
+
+    current_app.posts.append(post)
+    append_post(post)
+
+    return redirect(url_for("main.index"))

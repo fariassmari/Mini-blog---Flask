@@ -1,13 +1,16 @@
 from flask import Flask
-from .main import main as main_bp
-from .admin import admin as admin_bp
+from .funcoes import read_posts, ensure_csv_exists
+from . import admin, main
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = 'secret'
-    app.posts = []  # lista simulando "banco de dados"
 
-    app.register_blueprint(main_bp)
-    app.register_blueprint(admin_bp, url_prefix='/admin')
+    # Garante a existência do CSV
+    ensure_csv_exists()
+    app.posts = read_posts()
+
+    # Registra rotas
+    app.register_blueprint(main.main)
+    app.register_blueprint(admin.admin)
 
     return app
